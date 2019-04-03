@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import {render} from 'react-dom'
+import { hot } from 'react-hot-loader/root'
 import Logo from './components/Logo/'
 import Link from './components/Link/'
 
@@ -14,7 +15,7 @@ const logos = [
 ]
 
 
-export default class App extends Component {
+class App extends Component {
     render() {
         const logosRender = logos.map( (logo, index) => {
             return <Logo key = {index} src = { logo } />
@@ -25,9 +26,8 @@ export default class App extends Component {
                 {logosRender}
 
                 <div className="hello">
-                    <h1>Hello React!</h1>
+                    <h1>Hello React</h1>
                 </div>
-
                 <p>
                     If you are trying to build Electron apps using React, or you just
                     want to play around with them, feel free to use this
@@ -55,3 +55,6 @@ export default class App extends Component {
         )
     }
 }
+
+export default hot(App);
+

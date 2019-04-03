@@ -1,16 +1,17 @@
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const {dist, src} = require("./helpers");
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
-
-    watch: true,
-
     target: 'electron-renderer',
 
     entry: './app/src/renderer_process.js',
 
     output: {
-        path: __dirname + '/app/build',
-        publicPath: 'build/',
+        path: dist(),
+        publicPath: '',
         filename: 'bundle.js'
     },
 
@@ -47,7 +48,16 @@ module.exports = {
             filename: 'bundle.css',
             disable: false,
             allChunks: true
-        })
+        }),
+        new HtmlWebpackPlugin({
+            template: path.resolve(__dirname, '../app/src/index.ejs')
+        }),
+        new CopyPlugin([
+            {
+                from: src('/assets'),
+                to: dist('/assets')
+            }
+        ])
     ],
 
     resolve: {
